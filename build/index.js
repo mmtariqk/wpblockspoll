@@ -80,15 +80,16 @@ function Edit(_ref) {
 
   const [meta, updateMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.useEntityProp)('postType', postType, 'meta', postId);
   const updatePollData = () => {
-    console.log(meta);
     updateMeta({
       ...meta,
       tariq_poll_data: JSON.stringify(options)
     });
+    updateMeta({
+      ...meta,
+      tariq_poll_title: title
+    });
   };
-  console.log(meta);
-  // console.log(meta);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)(), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, postId), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, postType), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_google_charts__WEBPACK_IMPORTED_MODULE_7__.Chart, {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)(), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_google_charts__WEBPACK_IMPORTED_MODULE_7__.Chart, {
     chartType: "PieChart",
     data: [["Item", "Votes"], ...options],
     options: {
@@ -103,40 +104,87 @@ function Edit(_ref) {
     initialOpen: true
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
     label: "Title",
+    value: title,
     onChange: newTitle => setAttributes({
       title: newTitle
     })
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", null), options.map((option, i) => {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, {
       key: i
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", {
+      width: "100%",
+      border: "0"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", {
+      width: "50%"
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
       label: "Item",
       value: option[0],
       onChange: newValue => {
-        const updatedOptions = options.map(e => {
-          if (option[0] == e[0]) {
-            return [newValue, e[1]];
+        let removeIdx = false;
+        let updatedOptions = options.map((entry, ei) => {
+          if (option[0] == entry[0]) {
+            return [newValue, entry[1]];
           }
-          return e;
+          return entry;
         });
         setAttributes({
           options: updatedOptions
         });
       }
-    }));
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", {
+      width: "50%"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+      label: "Votes",
+      value: option[1],
+      onChange: newValue => {
+        const updatedOptions = options.map(entry => {
+          if (option[0] == entry[0]) {
+            return [entry[0], newValue * 1];
+          }
+          return entry;
+        });
+        console.log(updatedOptions);
+        setAttributes({
+          options: updatedOptions
+        });
+      }
+    })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+      onClick: () => {
+        let updatedOptions = [];
+        updatedOptions = options.filter((entry, ei) => ei !== i);
+        setAttributes({
+          options: updatedOptions
+        });
+      }
+    }, "x")))));
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", {
+    width: "100%",
+    border: "0"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", {
+    width: "50%"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    style: {
+      width: '100%',
+      textAlign: 'center'
+    },
     onClick: () => {
       const updatedOptions = [...options, ['', 0]];
       setAttributes({
         options: updatedOptions
       });
     }
-  }, "Add New")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+  }, "Add New")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", {
+    width: "50%"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    style: {
+      width: '100%',
+      textAlign: 'center'
+    },
     isPrimary: true,
     onClick: () => {
       updatePollData();
     }
-  }, "Save"))))));
+  }, "Save")))))))));
 }
 
 /***/ }),

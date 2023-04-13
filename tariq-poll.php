@@ -31,6 +31,12 @@ function tariq_poll_tariq_poll_block_init() {
 		'single' => true,
 		'type' => 'string'
 	]);
+
+	register_post_meta('page', 'tariq_poll_title', [
+		'show_in_rest' => true,
+		'single' => true,
+		'type' => 'string'
+	]);
 }
 add_action('init', 'tariq_poll_tariq_poll_block_init');
 
