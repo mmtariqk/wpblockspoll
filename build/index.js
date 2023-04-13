@@ -82,10 +82,7 @@ function Edit(_ref) {
   const updatePollData = () => {
     updateMeta({
       ...meta,
-      tariq_poll_data: JSON.stringify(options)
-    });
-    updateMeta({
-      ...meta,
+      tariq_poll_data: JSON.stringify(options),
       tariq_poll_title: title
     });
   };

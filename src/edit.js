@@ -57,13 +57,10 @@ export default function Edit({ attributes: {
 
 		updateMeta({
 			...meta,
-			tariq_poll_data: JSON.stringify(options)
-		});
-
-		updateMeta({
-			...meta,
+			tariq_poll_data: JSON.stringify(options),
 			tariq_poll_title: title
 		});
+
 	}
 
 	return (
