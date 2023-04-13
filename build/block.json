@@ -8,8 +8,23 @@
   "icon": "smiley",
   "description": "WP Poll block created by Tariq",
   "supports": {
-    "html": false
+    "html": false,
+    "customClassName": false,
+    "multiple": false
   },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Tariq Poll"
+    },
+    "options": {
+      "type": "array"
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
   "textdomain": "tariq-poll",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",

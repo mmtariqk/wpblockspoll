@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name:       Tariq Block Poll
  * Description:       WP Poll block created by Tariq
@@ -21,6 +22,22 @@
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
 function tariq_poll_tariq_poll_block_init() {
-	register_block_type( __DIR__ . '/build' );
+	register_block_type(__DIR__ . '/build', [
+		'render_callback' => 'tariq_poll_tariq_poll_block_render'
+	]);
+
+	register_post_meta('page', 'tariq_poll_data', [
+		'show_in_rest' => true,
+		'single' => true,
+		'type' => 'string'
+	]);
 }
-add_action( 'init', 'tariq_poll_tariq_poll_block_init' );
+add_action('init', 'tariq_poll_tariq_poll_block_init');
+
+
+function tariq_poll_tariq_poll_block_render($attributes, $content, $block) {
+	ob_start();
+	// echo '<pre>'; print_r($block);
+	echo $content;
+	return ob_get_clean();
+}
